@@ -1,0 +1,101 @@
+ Time		p_ready	p_valid	unlock	pwd_incorrect
+# 10000	1	0	0	0
+# 20000	1	0	0	0
+# 30000	1	0	0	0
+# 40000	1	0	0	0
+# 50000	1	0	0	0
+# 60000	1	0	0	0
+# 70000	1	0	0	0
+# 80000	1	0	0	0
+# 90000	1	0	0	0
+# 
+# === Testing Pattern: 1101 ===
+# 100000	1	0	0	0
+# 110000	1	0	0	0
+# 120000	1	0	0	0
+# 130000	1	0	0	0
+# 140000	1	0	0	0
+# 150000	1	0	0	0
+# 160000	1	1	0	0
+# 170000	0	0	0	0
+# Time=175000: Serial bit = 1, State = IDLE, FSM ready = 1
+# 180000	0	0	0	0
+# Time=185000: Serial bit = 0, State = S_1, FSM ready = 1
+# 190000	0	0	0	0
+# Time=195000: Serial bit = 1, State = S_10, FSM ready = 1
+# 200000	0	0	1	0
+# Time=205000: Serial bit = 1, State = S_101, FSM ready = 0
+# Time=205000: UNLOCK SIGNAL ACTIVATED!
+# 210000	1	0	0	0
+# 220000	1	0	0	0
+# 230000	1	0	0	0
+# 240000	1	0	0	0
+# 250000	1	0	0	0
+# 260000	1	0	0	0
+# 270000	1	0	0	0
+# 280000	1	0	0	0
+# === Pattern 1101 complete ===
+# Final state: unlock = 0, pwd_incorrect = 0
+# 
+# 
+# === Testing Pattern: 1100 ===
+# 290000	1	0	0	0
+# 300000	1	0	0	0
+# 310000	1	0	0	0
+# 320000	1	0	0	0
+# 330000	1	0	0	0
+# 340000	1	0	0	0
+# 350000	1	1	0	0
+# 360000	0	0	0	1
+# Time=365000: Serial bit = 0, State = IDLE, FSM ready = 0
+# Time=365000: PASSWORD INCORRECT SIGNAL ACTIVATED!
+# 370000	1	0	0	0
+# 380000	1	0	0	0
+# 390000	1	0	0	0
+# 400000	1	0	0	0
+# 410000	1	0	0	0
+# 420000	1	0	0	0
+# 430000	1	0	0	0
+# 440000	1	0	0	0
+# === Pattern 1100 complete ===
+# Final state: unlock = 0, pwd_incorrect = 0
+# 
+# 
+# === Testing Pattern: 1001 ===
+# 450000	1	0	0	0
+# 460000	1	0	0	0
+# 470000	1	0	0	0
+# 480000	1	0	0	0
+# 490000	1	0	0	0
+# 500000	1	0	0	0
+# 510000	1	1	0	0
+# 520000	0	0	0	0
+# Time=525000: Serial bit = 1, State = IDLE, FSM ready = 1
+# 530000	0	0	0	0
+# Time=535000: Serial bit = 0, State = S_1, FSM ready = 1
+# 540000	0	0	0	1
+# Time=545000: Serial bit = 0, State = S_10, FSM ready = 0
+# Time=545000: PASSWORD INCORRECT SIGNAL ACTIVATED!
+# 550000	1	0	0	0
+# 560000	1	0	0	0
+# 570000	1	0	0	0
+# 580000	1	0	0	0
+# 590000	1	0	0	0
+# 600000	1	0	0	0
+# 610000	1	0	0	0
+# 620000	1	0	0	0
+# === Pattern 1001 complete ===
+# Final state: unlock = 0, pwd_incorrect = 0
+# 
+# 630000	1	0	0	0
+# 640000	1	0	0	0
+# 650000	1	0	0	0
+# 660000	1	0	0	0
+# 670000	1	0	0	0
+# 680000	1	0	0	0
+# 690000	1	0	0	0
+# 700000	1	0	0	0
+# 710000	1	0	0	0
+# 720000	1	0	0	0
+# 
+# === Simulation Complete ===
