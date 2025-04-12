@@ -7,33 +7,33 @@ module integrated_unlocking_system #(parameter N=4)(
     output logic unlock,          // Unlock signal
     output logic pwd_incorrect    // Password incorrect signal
 );
-    
-    // Internal signals for connecting the modules
-    logic s_data;       // Serial data from converter to FSM
-    logic s_valid;      // Serial data valid
-    logic s_ready;      // Serial data ready
+    // Internal signals connecting P2S converter to Mealy FSM
+    logic s_data;     // Serial data bit
+    logic s_valid;    // Serial data valid
+    logic s_ready;    // Serial data ready
 
-    // Instantiate parallel to serial converter
+    // Instantiate P2S Converter
     p2s_converter #(.N(N)) p2s_inst (
         .clk(clk),
-        .rstn(rst_n),
-        .p_data(p_data),
-        .p_valid(p_valid),
-        .p_ready(p_ready),
-        .s_data(s_data),
-        .s_valid(s_valid),
-        .s_ready(s_ready)
+        .rstn(rst_n),           // Active low reset
+        .p_data(p_data),        // Parallel input data
+        .p_valid(p_valid),      // Parallel data valid
+        .p_ready(p_ready),      // Ready to accept parallel data
+        .s_data(s_data),        // Serial output data
+        .s_valid(s_valid),      // Serial data valid
+        .s_ready(s_ready)       // Serial data ready
     );
 
-    // Instantiate Mealy FSM unlocking module
-    mealy_fsm_unlocking fsm_inst (
+    // Instantiate Mealy FSM Unlocking Module
+    // Note: Converting active-low reset to active-high for the FSM
+    mealy_fsm_unlocking mealy_fsm (
         .clk(clk),
-        .reset(~rst_n),         // Convert active-low to active-high reset
-        .serial_data(s_data),
-        .serial_valid(s_valid),
-        .unlock(unlock),
-        .pwd_incorrect(pwd_incorrect),
-        .serial_ready(s_ready)
+        .reset(~rst_n),          // Convert to active high reset
+        .serial_data(s_data),    // Serial input data from P2S
+        .serial_valid(s_valid),  // Serial data valid
+        .serial_ready(s_ready),  // Ready to accept serial data
+        .unlock(unlock),         // Unlock output signal
+        .pwd_incorrect(pwd_incorrect) // Password incorrect output signal
     );
 
 endmodule
