@@ -11,24 +11,40 @@ module integrated_unlocking_system #(parameter N=4)(
     logic s_data;     // Serial data bit
     logic s_valid;    // Serial data valid
     logic s_ready;    // Serial data ready
+    
+    // Reset handling
+    logic auto_reset;  // Auto reset signal after error or unlock
+    logic system_rst;  // Combined reset signal
+    
+    // Create reset pulse when we get an error or unlock
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) 
+            auto_reset <= 1'b0;
+        else if (pwd_incorrect || unlock)
+            auto_reset <= 1'b1;
+        else
+            auto_reset <= 1'b0;
+    end
+    
+    // Combined reset for the system
+    assign system_rst = ~rst_n | auto_reset;
 
     // Instantiate P2S Converter
     p2s_converter #(.N(N)) p2s_inst (
         .clk(clk),
-        .rstn(rst_n),           // Active low reset
-        .p_data(p_data),        // Parallel input data
-        .p_valid(p_valid),      // Parallel data valid
-        .p_ready(p_ready),      // Ready to accept parallel data
-        .s_data(s_data),        // Serial output data
-        .s_valid(s_valid),      // Serial data valid
-        .s_ready(s_ready)       // Serial data ready
+        .rstn(~system_rst),      // Active low reset
+        .p_data(p_data),         // Parallel input data
+        .p_valid(p_valid),       // Parallel data valid
+        .p_ready(p_ready),       // Ready to accept parallel data
+        .s_data(s_data),         // Serial output data
+        .s_valid(s_valid),       // Serial data valid
+        .s_ready(s_ready)        // Serial data ready
     );
 
     // Instantiate Mealy FSM Unlocking Module
-    // Note: Converting active-low reset to active-high for the FSM
     mealy_fsm_unlocking mealy_fsm (
         .clk(clk),
-        .reset(~rst_n),          // Convert to active high reset
+        .reset(system_rst),      // Use combined reset
         .serial_data(s_data),    // Serial input data from P2S
         .serial_valid(s_valid),  // Serial data valid
         .serial_ready(s_ready),  // Ready to accept serial data
